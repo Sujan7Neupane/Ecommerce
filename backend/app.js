@@ -1,9 +1,10 @@
 import "dotenv/config";
 import express from "express";
+import cookieParser from "cookie-parser";
 
 import { connectDB } from "./src/db/dbConnection.js";
 import userRouter from "./src/routes/userRouter.js";
-import cookieParser from "cookie-parser";
+import categoryRouter from "./src/routes/categoryRouter.js";
 
 const app = express();
 const PORT = process.env.PORT;
@@ -16,6 +17,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", userRouter);
+app.use("/api/category", categoryRouter);
 
 connectDB()
   .then(() => {
