@@ -3,9 +3,7 @@ import { setToken } from "../utils/jwtToken.js";
 
 const registerUser = async (req, res) => {
   try {
-    // NOTE: isAdmin -> dangerous to pass from body
-    // TODO: Later make a seed.js file
-    const { fullName, email, password, isAdmin } = req.body;
+    const { fullName, email, password } = req.body;
 
     const existingUser = await User.findOne({ email });
 
@@ -17,13 +15,14 @@ const registerUser = async (req, res) => {
       fullName,
       email,
       password,
-      isAdmin,
     });
 
     res
       .status(201)
       .json({ message: "User registered successfully!", registeredUser });
-  } catch (error) {}
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 const getAllUsers = async (req, res) => {
