@@ -48,7 +48,7 @@ export const products = [
     countInStock: 30,
     image: "https://picsum.photos/400/400?random=3",
     imagePublicId: "sony-xm5",
-    averageRating: 4.9,
+    averageRating: 2.9,
     numReviews: 412,
     reviews: [],
     createdBy: "admin",

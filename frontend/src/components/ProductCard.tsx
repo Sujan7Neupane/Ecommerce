@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import type { Product } from "../types/product";
+import Rating from "./Rating";
 
 interface ProductCardProps {
   product: Product;
@@ -24,9 +25,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
             {product.description}
           </p>
 
-          <div className="flex items-center justify-between text-sm text-gray-500">
-            <span>{product.averageRating}</span>
-            <span>{product.numReviews} reviews</span>
+          <div className="flex text-sm">
+            <Rating
+              value={product.averageRating}
+              text={`${product.numReviews} reviews`}
+            />
           </div>
 
           <div className="flex items-center gap-2 justify-between">

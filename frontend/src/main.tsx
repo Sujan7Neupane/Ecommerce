@@ -7,6 +7,7 @@ import CartPage from "./pages/CartPage.tsx";
 import ProductPage from "./pages/ProductPage.tsx";
 import ProfilePage from "./pages/ProfilePage.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
+import ProductDetailsPage from "./pages/ProductDetailsPage.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
@@ -16,6 +17,7 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/cart" element={<CartPage />} />
         <Route path="/products" element={<ProductPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile/:id" element={<ProductDetailsPage />} />
         <Route path="/login" element={<LoginPage />} />
       </Route>
     </Routes>
