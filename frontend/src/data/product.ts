@@ -45,7 +45,7 @@ export const products = [
     brand: "Sony",
     price: 399,
     discountPrice: 349,
-    countInStock: 30,
+    countInStock: 0,
     image: "https://picsum.photos/400/400?random=3",
     imagePublicId: "sony-xm5",
     averageRating: 2.9,

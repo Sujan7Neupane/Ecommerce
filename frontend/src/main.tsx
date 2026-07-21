@@ -8,18 +8,22 @@ import ProductPage from "./pages/ProductPage.tsx";
 import ProfilePage from "./pages/ProfilePage.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
 import ProductDetailsPage from "./pages/ProductDetailsPage.tsx";
+import { Provider } from "react-redux";
+import { store } from "./redux/store.ts";
 
 createRoot(document.getElementById("root")!).render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<App />}>
-        <Route path="" element={<HomePage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/products" element={<ProductPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/profile/:id" element={<ProductDetailsPage />} />
-        <Route path="/login" element={<LoginPage />} />
-      </Route>
-    </Routes>
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />}>
+          <Route path="" element={<HomePage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/products" element={<ProductPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/product/:id" element={<ProductDetailsPage />} />
+          <Route path="/login" element={<LoginPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  </Provider>,
 );
