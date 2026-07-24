@@ -1,20 +1,27 @@
 import { useParams } from "react-router";
 import Rating from "../components/Rating";
 import { products } from "../data/product";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addToCart } from "../redux/slices/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToCart,
+  removeFromCart,
+  type CartItem,
+} from "../redux/slices/cartSlice";
 
 const ProductDetailsPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-
-  const [quantity, setQuantity] = useState(1);
   // console.log(quantity);
 
   // finding product
   const product = products.find((p) => p._id === Number(id));
   // console.log(product);
+
+  const cartItems = useSelector((state: any) => state.cart.cartItems);
+
+  const existingItem = cartItems.find(
+    (item: CartItem) => item._id === product?._id,
+  );
 
   if (!product) {
     return (
@@ -95,49 +102,35 @@ const ProductDetailsPage = () => {
             <div className="mt-4">
               <p className="mb-2 font-medium">Quantity</p>
 
-              <div className="flex items-center">
+              {!existingItem ? (
                 <button
-                  onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}
-                  className="h-10 w-10 rounded-l-lg border border-gray-300 hover:bg-gray-100"
+                  onClick={() => dispatch(addToCart(product))}
+                  className="w-full rounded-lg bg-black py-3 text-white hover:bg-gray-800"
                 >
-                  -
+                  Add to Cart
                 </button>
+              ) : (
+                <div className="flex items-center">
+                  <button
+                    onClick={() => dispatch(removeFromCart(product._id))}
+                    className="h-10 w-10 rounded-l-lg border border-gray-300 hover:bg-gray-100"
+                  >
+                    -
+                  </button>
 
-                <span className="flex h-10 w-12 items-center justify-center border-y border-gray-300">
-                  {quantity}
-                </span>
+                  <span className="flex h-10 w-12 items-center justify-center border-y border-gray-300">
+                    {existingItem.quantity}
+                  </span>
 
-                <button
-                  onClick={() =>
-                    setQuantity((prev) =>
-                      Math.min(product.countInStock, prev + 1),
-                    )
-                  }
-                  className="h-10 w-10 rounded-r-lg border border-gray-300 hover:bg-gray-100"
-                >
-                  +
-                </button>
-              </div>
+                  <button
+                    onClick={() => dispatch(addToCart(product))}
+                    className="h-10 w-10 rounded-r-lg border border-gray-300 hover:bg-gray-100"
+                  >
+                    +
+                  </button>
+                </div>
+              )}
             </div>
-
-            <button
-              onClick={() =>
-                dispatch(
-                  addToCart({
-                    ...product,
-                    quantity,
-                  }),
-                )
-              }
-              disabled={product.countInStock === 0}
-              className={`mt-6 w-full rounded-lg py-3 text-white transition ${
-                product.countInStock > 0
-                  ? "bg-black hover:bg-gray-800 cursor-pointer"
-                  : "bg-gray-400 cursor-not-allowed"
-              }`}
-            >
-              Add to Cart
-            </button>
 
             <button className="mt-3 w-full rounded-lg border border-gray-300 py-3 transition hover:bg-gray-100">
               Buy Now

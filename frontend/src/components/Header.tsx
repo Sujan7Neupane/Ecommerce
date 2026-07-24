@@ -9,10 +9,15 @@ import {
 } from "lucide-react";
 import { NavLink } from "react-router";
 import Container from "./Container";
+import { useSelector } from "react-redux";
+import type { CartItem } from "../redux/slices/cartSlice";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   //   console.log(isOpen);
+
+  const { cartItems } = useSelector((state: any) => state.cart);
+  // console.log(cartItems);
 
   const linkStyle = ({ isActive }: { isActive: boolean }) =>
     `flex items-center gap-2 font-medium transition-colors ${
@@ -23,7 +28,9 @@ const Header = () => {
     <header className="w-full bg-black shadow-md">
       <Container>
         <nav className="flex h-16 items-center justify-between">
-          <h1 className="text-2xl font-bold text-white">Ecommerce</h1>
+          <NavLink to="/" className={linkStyle}>
+            <h1 className="text-2xl font-bold text-white">Ecommerce</h1>
+          </NavLink>
 
           {/* Navigation */}
           <div className="hidden md:flex items-center gap-8">
@@ -45,6 +52,21 @@ const Header = () => {
             <NavLink to="/login" className={linkStyle}>
               <LogIn size={20} />
               <span>Login</span>
+            </NavLink>
+
+            <NavLink to="/cart" className={linkStyle}>
+              <div className="relative">
+                <ShoppingBasket size={20} />
+
+                <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">
+                  {cartItems.reduce(
+                    (acc: number, item: CartItem) => acc + item.quantity,
+                    0,
+                  )}
+                </span>
+              </div>
+
+              <span>Cart</span>
             </NavLink>
           </div>
 
@@ -95,6 +117,25 @@ const Header = () => {
             >
               <LogIn size={20} />
               <span>Login</span>
+            </NavLink>
+
+            <NavLink
+              to="/cart"
+              className={linkStyle}
+              onClick={() => setIsOpen(false)}
+            >
+              <div className="relative">
+                <ShoppingBasket size={20} />
+
+                <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">
+                  {cartItems.reduce(
+                    (acc: number, item: CartItem) => acc + item.quantity,
+                    0,
+                  )}
+                </span>
+              </div>
+
+              <span>Cart</span>
             </NavLink>
           </div>
         )}
