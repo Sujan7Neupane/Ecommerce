@@ -20,10 +20,14 @@ import {
 const router = express.Router();
 
 router.post("/add", checkAuth, isAdmin, upload.single("image"), addProduct);
-router.get("/all", checkAuth, isAdmin, getProducts);
-router.get("/:slug", checkAuth, isAdmin, getProductBySlug);
+router.get("/all", checkAuth, isAdmin, getProducts); // admin protected
+// router.get("/:slug", checkAuth, isAdmin, getProductBySlug); //admin protected
 router.put("/:id", checkAuth, isAdmin, upload.single("image"), updateProduct);
 router.delete("/:id", checkAuth, isAdmin, deleteProduct);
+
+// not protected routes - to display products
+router.get("/", getProducts);
+router.get("/:slug", getProductBySlug);
 
 // Product Review
 router.post("/:productId/reviews", checkAuth, addReview);

@@ -19,12 +19,14 @@ const ProductCard = ({ product }: ProductCardProps) => {
     state.cart.cartItems.find((item: CartItem) => item._id === product._id),
   );
 
+  // const existingItem = useSelector((state: any) => state.cart.cartItems);
+
   // console.log(existingItem);
 
   const dispatch = useDispatch();
   return (
     <div className="  border-gray-200 bg-white shadow-lg overflow-hidden rounded-xl border transition duration-300 hover:scale-[1.02] hover:shadow-lg cursor-pointer">
-      <Link to={`/product/${product._id}`}>
+      <Link to={`/product/${product.slug}`}>
         <img
           src={product.image}
           alt={product.name}
@@ -43,7 +45,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </p>
         </Link>
 
-        <div className="flex text-sm">
+        <div className="flex text-sm mt-2">
           <Rating
             value={product.averageRating}
             text={`${product.numReviews} reviews`}

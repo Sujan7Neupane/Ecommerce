@@ -20,7 +20,7 @@ createRoot(document.getElementById("root")!).render(
           <Route path="/cart" element={<CartPage />} />
           <Route path="/products" element={<ProductPage />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/product/:id" element={<ProductDetailsPage />} />
+          <Route path="/product/:slug" element={<ProductDetailsPage />} />
           <Route path="/login" element={<LoginPage />} />
         </Route>
       </Routes>

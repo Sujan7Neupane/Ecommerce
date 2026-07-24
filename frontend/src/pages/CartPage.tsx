@@ -12,6 +12,8 @@ const CartPage = () => {
   const { cartItems, totalPrice, shippingCharge, taxPrice, totalItems } =
     useSelector((state: any) => state.cart);
 
+  // console.log(cartItems);
+
   return (
     <div className="mx-auto max-w-7xl px-4 py-10">
       <h1 className="mb-8 text-3xl font-bold">Shopping Cart</h1>
@@ -26,7 +28,7 @@ const CartPage = () => {
           ) : (
             cartItems.map((item: CartItem) => (
               <div
-                key={item._id}
+                key={item?._id}
                 className="flex gap-5 rounded-xl border bg-white p-4 shadow-sm"
               >
                 <img
@@ -57,6 +59,7 @@ const CartPage = () => {
                           <button
                             onClick={() => dispatch(removeFromCart(item._id))}
                             className="h-10 w-10 rounded-l-lg border border-gray-300 hover:bg-gray-100"
+                            disabled={item.quantity === 1}
                           >
                             -
                           </button>
@@ -112,7 +115,7 @@ const CartPage = () => {
             <span>${totalPrice}</span>
           </div>
 
-          <button className="w-full rounded-lg bg-black py-3 font-medium text-white transition hover:bg-gray-800">
+          <button className="w-full rounded-lg bg-black py-3 font-medium text-white transition hover:bg-gray-800 cursor-pointer">
             Proceed to Checkout
           </button>
         </div>
