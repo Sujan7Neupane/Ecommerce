@@ -19,7 +19,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
     state.cart.cartItems.find((item: CartItem) => item._id === product._id),
   );
 
-  // console.log(existingItem?.quantity);
+  // console.log(existingItem);
 
   const dispatch = useDispatch();
   return (
@@ -73,16 +73,16 @@ const ProductCard = ({ product }: ProductCardProps) => {
         {/* !existingItem = cart is empty */}
         {!existingItem || existingItem.quantity === 0 ? (
           <button
-            onClick={() =>
-              dispatch(
-                addToCart({
-                  ...product,
-                }),
-              )
-            }
-            className="w-full rounded-lg bg-gray-900 py-2 text-sm font-medium text-white transition hover:bg-gray-700 cursor-pointer"
+            disabled={product.countInStock === 0}
+            onClick={() => dispatch(addToCart({ ...product }))}
+            className={`w-full rounded-lg py-2 text-sm font-medium transition
+            ${
+              product.countInStock === 0
+                ? "cursor-not-allowed bg-gray-400 text-gray-200"
+                : "cursor-pointer bg-gray-900 text-white hover:bg-gray-700"
+            }`}
           >
-            Add to Cart
+            {product.countInStock === 0 ? "Out of Stock" : "Add to Cart"}
           </button>
         ) : (
           <div className="flex items-center">
@@ -94,12 +94,17 @@ const ProductCard = ({ product }: ProductCardProps) => {
             </button>
 
             <span className="flex h-10 w-12 items-center justify-center border-y border-gray-300">
-              {existingItem?.quantity ?? 0}
+              {existingItem.quantity}
             </span>
 
             <button
+              disabled={existingItem.quantity >= product.countInStock}
               onClick={() => dispatch(addToCart({ ...product }))}
-              className="h-10 w-10 rounded-r-lg border border-gray-300 hover:bg-gray-100"
+              className={`h-10 w-10 rounded-r-lg border border-gray-300 ${
+                existingItem.quantity >= product.countInStock
+                  ? "cursor-not-allowed bg-gray-100 text-gray-400"
+                  : "hover:bg-gray-100"
+              }`}
             >
               +
             </button>

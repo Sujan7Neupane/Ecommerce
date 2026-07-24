@@ -54,7 +54,7 @@ export const cartSlice = createSlice({
         });
       }
 
-      console.log(current(state.cartItems));
+      // console.log(current(state.cartItems));
 
       // comes from the utils file
       // reason: repetation in addToCart and rmvFromCart

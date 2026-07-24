@@ -6,13 +6,17 @@ import Header from "./components/Header";
 const App = () => {
   return (
     <>
-      <Header />
-      <Container>
-        <main className="my-4">
-          <Outlet />
+      <div className="flex min-h-screen flex-col">
+        <Header />
+
+        <main className="flex-1 py-4">
+          <Container>
+            <Outlet />
+          </Container>
         </main>
-      </Container>
-      <Footer />
+
+        <Footer />
+      </div>
     </>
   );
 };
